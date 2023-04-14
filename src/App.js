@@ -2,14 +2,15 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Button } from "primereact/button";
 import { Header } from "./Header/Header";
-import { CourseForm } from "./Courses/Course/CourseForm";
+import { CourseForm } from "./Courses/CourseForm/CourseForm";
+import CourseList from "./Courses/CourseList/CourseList";
+import { UserForm } from "./User/UserForm";
+import { useState } from "react";
 
 function App() {
-  //todo: pure js functions
-
   return (
     <div>
-      {/* <Header /> */}
+      {/* <UserForm /> */}
       <CourseForm />
     </div>
   );

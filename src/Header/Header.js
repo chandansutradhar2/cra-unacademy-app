@@ -24,7 +24,6 @@ export const Header = () => {
           <span className="heading-primary-sub">
             Learn anytime, anywhere with ease.
           </span>
-          <span className="heading-primary-sub-2">Your future starts here</span>
         </h1>
 
         <a href="#" className="btn btn--white">
