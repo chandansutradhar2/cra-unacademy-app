@@ -3,32 +3,21 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import styles from "./courseform.module.css";
-import CourseList from "../CourseList/CourseList";
-
+import {Message,MessageProps} from 'primereact/message'
 const styling = {
   marginBottom: "1rem",
   fontSize: "20px",
 };
 
-export function CourseForm() {
-  console.log("CourseForm");
-  const [course, setCourse] = useState({
-    courseName: "",
-    authorName: "",
-    description: "",
-  });
+export function CourseForm(props) {
+  const [course, setCourse] = useState(props.course);
   const clickHandler = () => {
-    alert(
-      course.courseName + " :" + course.authorName + ": " + course.description
-    );
-  };
-
-  const editHandler = (ev) => {
-    setCourse({
-      courseName: ev.courseName,
-      authorName: ev.authorName,
-      description: ev.description,
-    });
+    if (props.course.courseName) {
+      props.onCourseUpdated(course);
+    } else {
+      props.onCourseAdded(course);
+    }
+    
   };
 
   return (
@@ -80,12 +69,11 @@ export function CourseForm() {
         </div>
 
         <Button
-          label="ADD COURSE"
+          label={props.course?.courseName ? "Update Course" : "Add Course"}
           style={styling}
           onClick={() => clickHandler()}
         />
       </div>
-      <CourseList course={course} onEdit={editHandler} />
     </div>
   );
 }

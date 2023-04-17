@@ -25,7 +25,6 @@ export const Header = () => {
             Learn anytime, anywhere with ease.
           </span>
         </h1>
-
         <a href="#" className="btn btn--white">
           Start Learning
         </a>

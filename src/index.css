@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap');
 
-@import "primereact/resources/themes/lara-light-indigo/theme.css";
+/* @import "primereact/resources/themes/lara-light-indigo/theme.css"; */
+
+@import "primereact/resources/themes/md-light-deeppurple/theme.css";
 
 @import "primereact/resources/primereact.min.css";
 
 @import "primeicons/primeicons.css";
 
-*{
+/* *{
   margin:0px !important;
   padding: 0px !important;
-}
+} */
 
 
 /*

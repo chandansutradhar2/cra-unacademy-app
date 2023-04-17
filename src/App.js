@@ -1,17 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "primereact/button";
-import { Header } from "./Header/Header";
-import { CourseForm } from "./Courses/CourseForm/CourseForm";
-import CourseList from "./Courses/CourseList/CourseList";
-import { UserForm } from "./User/UserForm";
-import { useState } from "react";
+import { CourseMainComponent } from "./Courses/CourseMain/CourseMain";
 
 function App() {
   return (
     <div>
-      {/* <UserForm /> */}
-      <CourseForm />
+      <CourseMainComponent />
     </div>
   );
 }
