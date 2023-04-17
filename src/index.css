@@ -1,33 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap");
 
 /* @import "primereact/resources/themes/lara-light-indigo/theme.css"; */
 
-@import "primereact/resources/themes/md-light-deeppurple/theme.css";
+@import "primereact/resources/themes/soho-light/theme.css";
 
 @import "primereact/resources/primereact.min.css";
 
 @import "primeicons/primeicons.css";
-
-/* *{
-  margin:0px !important;
-  padding: 0px !important;
-} */
-
 
 /*
 PRIMARY COLOR: #A92AED
 secondary color: #BA98C9
 background color: #FFE8FF
 highlight color: #5FBAAF
-
 */
 
 body {
-    width: 100vw;
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.7;
-    color: #777;
-    padding: 2rem;
-  }
-
+  width: 100vw;
+  font-family: "Josefin Sans", sans-serif !important;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #777;
+  padding: 0;
+  margin: 0;
+}
