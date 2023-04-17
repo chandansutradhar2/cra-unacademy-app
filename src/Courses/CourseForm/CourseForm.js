@@ -3,7 +3,6 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import styles from "./courseform.module.css";
-import {Message,MessageProps} from 'primereact/message'
 const styling = {
   marginBottom: "1rem",
   fontSize: "20px",

@@ -31,7 +31,7 @@ export const CourseMainComponent = () => {
     }
   };
   const courseUpdateHandler = (course) => {
-    const index = courses.findIndex((item) => item.name === course.name);
+    const index = courses.findIndex((item) => item.courseName === course.courseName);
     if (index !== -1) {
       setCourses((prevState) => {
         prevState[index] = course;
@@ -54,10 +54,12 @@ export const CourseMainComponent = () => {
     setListCourse(true);
   };
 
-  const courseAddHandler = (course) => {
-    setCourses((prevState) => {
+  const onCourseAdded = (course) => {
+    setCourses( ( prevState ) => {
+      //prevState=[{},{},{}]
       return [course, ...prevState];
     });
+
     console.log(courses);
     setListCourse(true);
     setShowMessage(true);
@@ -77,7 +79,7 @@ export const CourseMainComponent = () => {
       ) : (
         <CourseForm
           course={course}
-          onCourseAdded={courseAddHandler}
+          onCourseAdded={onCourseAdded}
           onCourseUpdated={courseUpdateHandler}
         />
       )}
