@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 
 import "./signup.css";
 
+//match dto of nestjs
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
@@ -23,7 +24,7 @@ const SignupSchema = Yup.object().shape({
     .min(8, "Password must be 8 characters long"),
 });
 
-export const Signup = ({userType}) => {
+export const Signup = ({ userType }) => {
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -32,25 +33,46 @@ export const Signup = ({userType}) => {
       password: "",
       cpassword: "",
       mobileNo: "",
-      userType: userType,
+      roles: [userType],
     },
     validationSchema: SignupSchema,
+    validateOnBlur: true,
     onSubmit: (values) => {
       //code to make a api call using fetch
 
-      // fetch("http://localhost:2000/auth/signup", {
-      //   body: JSON.stringify(values),
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
-
-      alert(JSON.stringify(values, null, 2));
+      fetch("http://localhost:2000/auth/signup", {
+        body: JSON.stringify(values),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .catch((err) => {
+          console.log(err);
+          alert("failed to create user.due to some error");
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            console.log(res);
+            alert("User Created Successfully");
+          } else {
+            console.log(res);
+            alert(res.statusText);
+          }
+        });
+    },
+    onReset: () => {
+      formik.resetForm();
     },
   });
+
+  const validateEmail = async (email) => {
+    const response = await fetch(`/auth/check-email-exists?email=${email}`);
+    const data = await response.json();
+    if (!data.exists) {
+      throw new Error("Email address not found");
+    }
+  };
 
   return (
     <div className="signup">
@@ -61,6 +83,9 @@ export const Signup = ({userType}) => {
         <form
           className="signup__container__body"
           onSubmit={formik.handleSubmit}>
+          <span style={{ width: "100%", display: "none" }}>
+            some text here to span screen size to increase the screen size
+          </span>
           <div
             className="p-inputgroup"
             style={{

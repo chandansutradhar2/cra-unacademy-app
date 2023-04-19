@@ -38,6 +38,9 @@ export function CourseForm(props) {
               setCourse({ ...course, courseName: ev.target.value })
             }
           />
+          {
+            //some more javascript inside JSX to manage form validation/ data sanitization/ form state
+          }
         </div>
         <div
           className="p-inputgroup"
