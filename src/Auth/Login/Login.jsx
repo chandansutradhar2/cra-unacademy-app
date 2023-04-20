@@ -10,7 +10,8 @@ const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .required("Required")
-    .min(8, "Password must be 8 characters long"),
+    .min(8, "Password must be 8 characters long")
+    .max(16, "cannot be more than 16 characters"),
 });
 
 export const LoginForm = () => {
@@ -18,7 +19,6 @@ export const LoginForm = () => {
     initialValues: { email: "", password: "" },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      //alert( JSON.stringify( values, null, 2 ) );
       fetch("http://localhost:2000/auth/login", {
         body: JSON.stringify(values),
         method: "POST",
@@ -30,15 +30,27 @@ export const LoginForm = () => {
           alert("failed to login due to some error");
         })
         .then((res) => {
-          res.json().then((data) => {
-            console.log(data);
-            if (data.statusCode === 401) {
-              alert(data.message);
-              return;
-            }
-            localStorage.setItem("access_token", data.access_token);
-            alert(" welcome back " + formik.values.email);
-          });
+          console.log("fetch response=>", res);
+          if (res.status === 201) {
+            res.json().then(async (data) => {
+              localStorage.setItem("access_token", data.access_token);
+              alert(" welcome back " + formik.values.email);
+              const user = await fetch(
+                `http://localhost:2001/user/current-user/${formik.values.email}`,
+                {
+                  method: "GET",
+                }
+              );
+
+              const userJson = await user.json();
+              console.log(userJson);
+              localStorage.setItem("user", JSON.stringify(userJson));
+            });
+          } else if (res.status === 401) {
+            alert("invalid credentials");
+          } else {
+            alert("failed to login due to some technical error");
+          }
         });
     },
   });
@@ -51,7 +63,7 @@ export const LoginForm = () => {
             src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
             height={120}
             width={120}
-            alt=" angular logo"
+            alt=" react logo"
           />
         </div>
         <div className={styles.login_container_right}>
@@ -66,9 +78,9 @@ export const LoginForm = () => {
 
               <InputText
                 placeholder="Email"
+                type="email"
                 id="email"
                 name="email"
-                type="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 className={formik.errors.email ? "p-invalid block" : ""}
