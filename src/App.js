@@ -5,24 +5,26 @@ import "./App.css";
 
 function App() {
   return (
-    <>
-      <nav
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem",
-        }}>
-        <Link to="/course" style={{ padding: "0.8rem" }}>
-          Course
-        </Link>
-        <Link to="/home" style={{ padding: "0.8rem" }}>
+    <div className="main">
+      <nav className="nav">
+        <Link to="/home" index className="link">
           Home
         </Link>
-        <Link to="/login" style={{ padding: "0.8rem" }}>
+        <Link to="/course" className="link">
+          Course
+        </Link>
+        <Link to="/course" className="link">
+          Live Classes
+        </Link>
+
+        <Link className="link login" to="/login">
           Login
         </Link>
       </nav>
-      <Outlet />
-    </>
+      <div className="content">
+        <Outlet />
+      </div>
+    </div>
   );
 }
 

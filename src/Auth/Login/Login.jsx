@@ -97,6 +97,7 @@ export const LoginForm = () => {
                 <i className="pi pi-key"></i>
               </span>
               <Password
+                
                 placeholder="Password"
                 value={formik.values.password}
                 feedback={false}
@@ -104,7 +105,8 @@ export const LoginForm = () => {
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
-                className={formik.errors.password ? "p-invalid block" : ""}
+                className={ formik.errors.password ? "p-invalid block" : "" }
+                s
               />
             </div>
             {formik.errors.password ? (
