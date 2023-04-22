@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="main">
       <nav className="nav">
-        <Link to="/home" index className="link">
+        <Link to="/home" index="true" className="link">
           Home
         </Link>
         <Link to="/course" className="link">
