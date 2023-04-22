@@ -54,7 +54,9 @@ export const Signup = ({ userType }) => {
         .then((res) => {
           if (res.status === 201) {
             console.log(res);
-            alert("User Created Successfully");
+            alert( "User Created Successfully" );
+            //todo : redirect to home page
+            
           } else {
             console.log(res);
             alert(res.statusText);

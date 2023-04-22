@@ -5,29 +5,24 @@ import logo from "../img/new-logo.png"; // with import
 export const Header = () => {
   return (
     <div className="header">
-      <div className="logo-box">
-        <div className="logo">
-          <span
-            style={{
-              color: "white",
-              fontSize: "30px",
-              fontWeight: "400",
-            }}>
-            UN
-          </span>
-        </div>
+      <div className="header__logo">
+        <img src={logo} alt="logo" />
       </div>
-
-      <div className="text-box">
-        <h1 className="heading-primary">
-          <span className="heading-primary-main">UNACADEMY</span>
-          <span className="heading-primary-sub">
-            Learn anytime, anywhere with ease.
-          </span>
-        </h1>
-        <a href="#" className="btn btn--white">
-          Start Learning
-        </a>
+      <div className="header__menu">
+        <ul>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Courses</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Login</a>
+          </li>
+        </ul>
       </div>
     </div>
   );
