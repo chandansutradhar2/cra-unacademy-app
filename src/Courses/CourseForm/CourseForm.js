@@ -16,7 +16,6 @@ export function CourseForm(props) {
     } else {
       props.onCourseAdded(course);
     }
-    
   };
 
   return (
@@ -33,14 +32,9 @@ export function CourseForm(props) {
           </span>
           <InputText
             placeholder="Course Name"
-            value={course.courseName}
-            onChange={(ev) =>
-              setCourse({ ...course, courseName: ev.target.value })
-            }
+            value={course.name}
+            onChange={(ev) => setCourse({ ...course, name: ev.target.value })}
           />
-          {
-            //some more javascript inside JSX to manage form validation/ data sanitization/ form state
-          }
         </div>
         <div
           className="p-inputgroup"
@@ -51,10 +45,10 @@ export function CourseForm(props) {
             <i className="pi pi-user"></i>
           </span>
           <InputText
-            placeholder="Author Name"
-            value={course.authorName}
+            placeholder="Instructor Name"
+            value={course.instructor}
             onChange={(ev) =>
-              setCourse({ ...course, authorName: ev.target.value })
+              setCourse({ ...course, instructor: ev.target.value })
             }
           />
         </div>
