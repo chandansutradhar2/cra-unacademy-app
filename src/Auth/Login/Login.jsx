@@ -5,6 +5,7 @@ import { Password } from "primereact/password";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./login.module.css";
+import { Link } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -36,14 +37,17 @@ export const LoginForm = () => {
               localStorage.setItem("access_token", data.access_token);
               alert(" welcome back " + formik.values.email);
               const user = await fetch(
-                `http://localhost:2001/user/current-user/${formik.values.email}`,
+                `http://localhost:2000/user/current-user/${formik.values.email}`,
                 {
                   method: "GET",
                 }
               );
 
               const userJson = await user.json();
-              console.log(userJson);
+              console.log( userJson );
+              //todo: reditect to home
+              //send user name to the home component as params
+
               localStorage.setItem("user", JSON.stringify(userJson));
             });
           } else if (res.status === 401) {
@@ -114,6 +118,8 @@ export const LoginForm = () => {
               </span>
               <Button label="Login" type="submit" className={styles.button} />
             </div>
+
+            <Link to="../user/signup">New Here? Create an Account</Link>
           </form>
         </div>
       </div>
