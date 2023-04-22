@@ -1,28 +1,28 @@
-import logo from "./logo.svg";
+import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
 import "./App.css";
-import { CourseMainComponent } from "./Courses/CourseMain/CourseMain";
-import { Layout } from "./Layout/Layout";
-import { AuthMain } from "./Auth/AuthMain";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./Home/Home";
-import { LoginForm } from "./Auth/Login/Login";
-import NoPage from "./NoPage/NoPage";
 
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<Layout />}>
-    //       <Route index element={<Home />} />
-    //       <Route path="course" element={<CourseMainComponent />} />
-    //       <Route path="login" element={<LoginForm />} />
-    //       <Route path="*" element={<NoPage />} />
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
-    <div className="App">
-      <LoginForm />
-    </div>
+    <>
+      <nav
+        style={{
+          borderBottom: "solid 1px",
+          paddingBottom: "1rem",
+        }}>
+        <Link to="/course" style={{ padding: "0.8rem" }}>
+          Course
+        </Link>
+        <Link to="/home" style={{ padding: "0.8rem" }}>
+          Home
+        </Link>
+        <Link to="/login" style={{ padding: "0.8rem" }}>
+          Login
+        </Link>
+      </nav>
+      <Outlet />
+    </>
   );
 }
 
