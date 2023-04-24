@@ -70,6 +70,14 @@ export const CourseMainComponent = () => {
     setListCourse(true);
     setCourse({});
   };
+  const onEditHandler = (course) => {
+    setCourse(course);
+    navigate("edit", {
+      state: {
+        course: course,
+      },
+    });
+  };
 
   const courseUpdateHandler = (course) => {
     const index = courses.findIndex(
@@ -122,7 +130,10 @@ export const CourseMainComponent = () => {
         <Routes>
           <Route path="add" element={<CourseForm />} />
           <Route path="edit" element={<CourseForm course={course} />} />
-          <Route path="list" element={<CourseList courses={courses} />} />
+          <Route
+            path="list"
+            element={<CourseList courses={courses} onEdit={onEditHandler} />}
+          />
         </Routes>
       </div>
       <div style={{ width: "100vw" }} id="course-main" name="course-main">

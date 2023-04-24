@@ -5,7 +5,7 @@ import { PrimeIcons } from "primereact/api";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import React, { useRef } from "react";
 
-export default function ActionControl() {
+export default function ActionControl(props) {
   const menu = useRef(null);
   const toast = useRef(null);
   let navigate = useNavigate();
@@ -19,16 +19,14 @@ export default function ActionControl() {
           icon: "pi pi-fw pi-pencil",
           command: (event) => {
             //this.props.onMenuClicked(event.item);
-            navigate("/course/edit", {
-              replace: true,
-            });
+            props.onMenuClicked(event.item.label);
           },
         },
         {
           label: "Sections",
           icon: "pi pi-fw pi-book",
           command: (event) => {
-            this.props.onMenuClicked(event.item.label);
+            props.onMenuClicked(event.item.label);
           },
         },
         {
@@ -82,14 +80,13 @@ export default function ActionControl() {
           label: "Students",
           link: "/students",
           icon: PrimeIcons.USER_PLUS,
-          command: ( event ) => {
-                                    toast.current.show({
-                                      severity: "success",
-                                      summary: "Updated",
-                                      detail: "Data Updated",
-                                      life: 3000,
-                                    });
-
+          command: (event) => {
+            toast.current.show({
+              severity: "success",
+              summary: "Updated",
+              detail: "Data Updated",
+              life: 3000,
+            });
           },
         },
       ],
@@ -109,7 +106,6 @@ export default function ActionControl() {
           label="Actions"
           aria-controls="popup_menu"
           aria-haspopup
-          
           icon="pi pi-settings"
           onClick={(ev) => menu.current.toggle(ev)}
           // onClick={(ev) => this.clickHandler(item)}

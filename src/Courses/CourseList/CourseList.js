@@ -13,10 +13,11 @@ export default class CourseList extends Component {
   //   this.props.onEdit(item);
   // };
 
-  onMenuClicked = (item) => {
-    alert(item);
-    switch (item) {
+  onMenuClicked = (label,item) => {
+    alert(label);
+    switch (label) {
       case "Edit Course":
+        this.props.onEdit(item);
         break;
 
       default:
@@ -47,7 +48,9 @@ export default class CourseList extends Component {
                   <td>{item.instructor}</td>
                   <td>{item.description}</td>
                   <td>
-                    <ActionControl onMenuClicked={this.onMenuClicked} />
+                    <ActionControl
+                      onMenuClicked={(ev) => this.onMenuClicked(ev,item)}
+                    />
                   </td>
                 </tr>
               ))}
