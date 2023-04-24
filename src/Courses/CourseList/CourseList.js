@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./course-list.module.css";
 import ActionControl from "../ActionControl/ActionControl";
+import { Link } from "react-router-dom";
 
 export default class CourseList extends Component {
   constructor(props) {
@@ -13,11 +14,11 @@ export default class CourseList extends Component {
   // };
 
   onMenuClicked = (item) => {
-    alert( item );
+    alert(item);
     switch (item) {
       case "Edit Course":
         break;
-    
+
       default:
         break;
     }
@@ -28,7 +29,7 @@ export default class CourseList extends Component {
       <div className={styles.main}>
         <div className={styles.container}>
           <h1>Course List</h1>
-
+          <Link to="/course/add">Add Course</Link>
           <table>
             <thead>
               <tr>

@@ -14,6 +14,8 @@ import { CourseMainComponent } from "./Courses/CourseMain/CourseMain";
 import { LoginForm } from "./Auth/Login/Login";
 import { Home } from "./Home/Home";
 import { Signup } from "./Auth/Signup/Signup";
+import { CourseForm } from "./Courses/CourseForm/CourseForm";
+import CourseList from "./Courses/CourseList/CourseList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -22,10 +24,12 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/course" element={<CourseMainComponent />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/course/*" element={<CourseMainComponent />} />
+
+          <Route path="/home" index element={<Home />} />
         </Route>
         <Route path="/login" element={<LoginForm />} />
+
         <Route path="/user">
           <Route path="signup" element={<Signup />} />
         </Route>

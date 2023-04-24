@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -10,6 +10,18 @@ const styling = {
 
 export function CourseForm(props) {
   const [course, setCourse] = useState(props.course);
+
+  useEffect(() => {
+    debugger;
+    if (course === null || course === undefined) {
+      setCourse({
+        name: "",
+        instructor: "",
+        description: "",
+      });
+    }
+  }, []);
+
   const clickHandler = () => {
     if (props.course.courseName) {
       props.onCourseUpdated(course);
@@ -32,7 +44,7 @@ export function CourseForm(props) {
           </span>
           <InputText
             placeholder="Course Name"
-            value={course.name}
+            value={course?.name}
             onChange={(ev) => setCourse({ ...course, name: ev.target.value })}
           />
         </div>
@@ -46,7 +58,7 @@ export function CourseForm(props) {
           </span>
           <InputText
             placeholder="Instructor Name"
-            value={course.instructor}
+            value={course?.instructor}
             onChange={(ev) =>
               setCourse({ ...course, instructor: ev.target.value })
             }
@@ -55,7 +67,7 @@ export function CourseForm(props) {
 
         <div>
           <InputTextarea
-            value={course.description}
+            value={course?.description}
             rows={5}
             cols={30}
             onChange={(ev) =>
@@ -65,7 +77,7 @@ export function CourseForm(props) {
         </div>
 
         <Button
-          label={props.course?.courseName ? "Update Course" : "Add Course"}
+          label={props.course?.name ? "Update Course" : "Add Course"}
           style={styling}
           onClick={() => clickHandler()}
         />

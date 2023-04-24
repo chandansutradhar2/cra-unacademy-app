@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -16,6 +17,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: LoginSchema,
@@ -44,9 +47,12 @@ export const LoginForm = () => {
               );
 
               const userJson = await user.json();
-              console.log( userJson );
+              console.log(userJson);
               //todo: reditect to home
               //send user name to the home component as params
+              navigate("/home", {
+                state: { user: userJson },
+              });
 
               localStorage.setItem("user", JSON.stringify(userJson));
             });
@@ -97,7 +103,6 @@ export const LoginForm = () => {
                 <i className="pi pi-key"></i>
               </span>
               <Password
-                
                 placeholder="Password"
                 value={formik.values.password}
                 feedback={false}
@@ -105,7 +110,7 @@ export const LoginForm = () => {
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
-                className={ formik.errors.password ? "p-invalid block" : "" }
+                className={formik.errors.password ? "p-invalid block" : ""}
                 s
               />
             </div>

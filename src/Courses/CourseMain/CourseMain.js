@@ -3,6 +3,8 @@ import { CourseForm } from "../CourseForm/CourseForm";
 import CourseList from "../CourseList/CourseList";
 import { useEffect, useRef, useState } from "react";
 import { Messages } from "primereact/messages";
+import { Link, Outlet, Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
 
 export const CourseMainComponent = () => {
   const [listCourse, setListCourse] = useState(true);
@@ -31,17 +33,17 @@ export const CourseMainComponent = () => {
     forum: [],
     sections: [
       {
-        sectionName: "",
-        sectionDescription: "",
-        sectionDuration: 0,
-        sectionVideos: [
+        name: "",
+        description: "",
+        duration: 0,
+        videos: [
           {
-            videoName: "",
-            videoLanguage:"",
-            videoDescription: "",
-            videoDuration: 0,
-            videoUrl: "",
-            videoCC:""
+            name: "",
+            language: "",
+            description: "",
+            duration: 0,
+            url: "",
+            videoCC: "",
           },
         ],
       },
@@ -83,19 +85,6 @@ export const CourseMainComponent = () => {
         prevState[index] = course;
         return [...prevState];
       });
-
-      msg.current.show({
-        severity: "success",
-        detail: "course updated successfully",
-        sticky: true,
-        life: 3000,
-      });
-
-      setShowMessage(true);
-
-      setTimeout(() => {
-        setShowMessage(false);
-      }, 3000);
     }
     setListCourse(true);
   };
@@ -129,23 +118,25 @@ export const CourseMainComponent = () => {
   };
 
   return (
-    <div>
-      {showMessage ? <Messages ref={msg}></Messages> : null}
-      <Button
-        label="Add Course"
-        onClick={addButtonHandler}
-        style={{ marginRight: "1rem" }}
-      />
-      <Button label="List Course" onClick={listCourseButtonHandler} />
-      {listCourse ? (
-        <CourseList courses={courses} onEdit={editButtonHandler} />
-      ) : (
-        <CourseForm
-          course={course}
-          onCourseAdded={onCourseAdded}
-          onCourseUpdated={courseUpdateHandler}
-        />
-      )}
-    </div>
+    <>
+      <div>
+        <Link to="add">Add Course</Link>
+        <Link to="list">List Courses</Link>
+      </div>
+      <div>
+        <Routes>
+          <Route path="add" element={<CourseForm />} />
+          <Route
+            path="list"
+            element={
+              <CourseList courses={courses} onCourseAdded={onCourseAdded}  />
+            }
+          />
+        </Routes>
+      </div>
+      <div style={{ width: "100vw" }} id="course-main" name="course-main">
+        <Outlet />
+      </div>
+    </>
   );
 };
