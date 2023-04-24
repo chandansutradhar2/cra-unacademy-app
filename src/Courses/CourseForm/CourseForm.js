@@ -12,7 +12,6 @@ export function CourseForm(props) {
   const [course, setCourse] = useState(props.course);
 
   useEffect(() => {
-    debugger;
     if (course === null || course === undefined) {
       setCourse({
         name: "",

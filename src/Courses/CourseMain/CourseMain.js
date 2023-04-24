@@ -3,10 +3,12 @@ import { CourseForm } from "../CourseForm/CourseForm";
 import CourseList from "../CourseList/CourseList";
 import { useEffect, useRef, useState } from "react";
 import { Messages } from "primereact/messages";
-import { Link, Outlet, Route, Routes } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 
 export const CourseMainComponent = () => {
+  const navigate = useNavigate();
+
   const [listCourse, setListCourse] = useState(true);
   const [showMessage, setShowMessage] = useState(false);
   const msg = useRef(null);
@@ -69,13 +71,6 @@ export const CourseMainComponent = () => {
     setCourse({});
   };
 
-  const editButtonHandler = (course) => {
-    if (course) {
-      setListCourse(false);
-      setCourse(course);
-    }
-  };
-
   const courseUpdateHandler = (course) => {
     const index = courses.findIndex(
       (item) => item.courseName === course.courseName
@@ -126,12 +121,8 @@ export const CourseMainComponent = () => {
       <div>
         <Routes>
           <Route path="add" element={<CourseForm />} />
-          <Route
-            path="list"
-            element={
-              <CourseList courses={courses} onCourseAdded={onCourseAdded}  />
-            }
-          />
+          <Route path="edit" element={<CourseForm course={course} />} />
+          <Route path="list" element={<CourseList courses={courses} />} />
         </Routes>
       </div>
       <div style={{ width: "100vw" }} id="course-main" name="course-main">

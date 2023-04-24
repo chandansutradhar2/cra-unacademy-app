@@ -29,7 +29,6 @@ export default class CourseList extends Component {
       <div className={styles.main}>
         <div className={styles.container}>
           <h1>Course List</h1>
-          <Link to="/course/add">Add Course</Link>
           <table>
             <thead>
               <tr>
