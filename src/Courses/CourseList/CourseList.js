@@ -1,35 +1,30 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import styles from "./course-list.module.css";
 import ActionControl from "../ActionControl/ActionControl";
 import { Link } from "react-router-dom";
+import { getAllCourse } from "../CourseService";
+export default function CourseList() {
+  console.log("course list component loaded");
+  const [courses, setCourses] = useState([]);
 
-export default class CourseList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  // clickHandler = (item) => {
-  //   //emitting an event from child to parent passing value
-  //   this.props.onEdit(item);
-  // };
-
-  onMenuClicked = (label,item) => {
+  const onMenuClicked = (label, item) => {
     alert(label);
     switch (label) {
       case "Edit Course":
         this.props.onEdit(item);
         break;
+      case "Delete Course":
 
       default:
         break;
     }
   };
 
-  render() {
-    return (
-      <div className={styles.main}>
-        <div className={styles.container}>
-          <h1>Course List</h1>
+  return (
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <h1>Course List</h1>
+        {courses && courses.length > 0 ? (
           <table>
             <thead>
               <tr>
@@ -41,7 +36,7 @@ export default class CourseList extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.courses.map((item, index) => (
+              {courses.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
@@ -49,15 +44,17 @@ export default class CourseList extends Component {
                   <td>{item.description}</td>
                   <td>
                     <ActionControl
-                      onMenuClicked={(ev) => this.onMenuClicked(ev,item)}
+                      onMenuClicked={(ev) => onMenuClicked(ev, item)}
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
 }

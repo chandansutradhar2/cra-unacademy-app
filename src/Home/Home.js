@@ -1,11 +1,13 @@
 import React, { Component, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./home.module.css";
 
 export const Home = () => {
+  const { firstName } = useParams();
 
   return (
     <div className={styles.home}>
+      <h6>Welcome , {firstName}</h6>
       <h1 className={styles.h1}>Learn Anywhwere, Anytime</h1>
       <div className={styles.btn}>
         <Link to="/course" className={styles.link}>

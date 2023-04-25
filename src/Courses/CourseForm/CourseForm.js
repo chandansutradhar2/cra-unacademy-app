@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
+import { addCourse } from "../CourseService";
 import styles from "./courseform.module.css";
+import { useHistory, useNavigate } from "react-router-dom";
 const styling = {
   marginBottom: "1rem",
   fontSize: "20px",
 };
 
 export function CourseForm(props) {
+  console.log("courseform component loaded");
+
+  const navigate = useNavigate();
+
   const [course, setCourse] = useState(props.course);
 
   useEffect(() => {
@@ -22,11 +28,14 @@ export function CourseForm(props) {
   }, []);
 
   const clickHandler = () => {
-    if (props.course.courseName) {
-      props.onCourseUpdated(course);
-    } else {
-      props.onCourseAdded(course);
-    }
+    addCourse(course)
+      .then(() => {
+        alert("course added successfully");
+        navigate("../list", {
+          replace: true,
+        });
+      })
+      .catch((err) => alert(err));
   };
 
   return (

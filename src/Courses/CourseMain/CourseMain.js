@@ -3,17 +3,25 @@ import { CourseForm } from "../CourseForm/CourseForm";
 import CourseList from "../CourseList/CourseList";
 import { useEffect, useRef, useState } from "react";
 import { Messages } from "primereact/messages";
-import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { Suspense } from "react";
 
-export const CourseMainComponent = () => {
+export default function CourseMain() {
+  console.log("coursemain component loaded");
   const navigate = useNavigate();
+  const params = useParams();
 
-  const [listCourse, setListCourse] = useState(true);
-  const [showMessage, setShowMessage] = useState(false);
   const msg = useRef(null);
   const [courses, setCourses] = useState([]);
   const [course, setCourse] = useState({
+    id: "",
     name: "",
     instructor: "",
     description: "",
@@ -52,24 +60,6 @@ export const CourseMainComponent = () => {
     ],
   });
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const response = await fetch("http://localhost:2000/course/all");
-      const data = await response.json();
-      setCourses(data);
-    };
-    fetchCourses();
-  }, []);
-
-  const addButtonHandler = () => {
-    setListCourse(false);
-    setCourse({});
-  };
-
-  const listCourseButtonHandler = () => {
-    setListCourse(true);
-    setCourse({});
-  };
   const onEditHandler = (course) => {
     setCourse(course);
     navigate("edit", {
@@ -84,12 +74,32 @@ export const CourseMainComponent = () => {
       (item) => item.courseName === course.courseName
     );
     if (index !== -1) {
+      fetch("http://localhost:2000/course/update", {
+        method: "PUT",
+        body: JSON.stringify(course),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          res
+            .json()
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       setCourses((prevState) => {
         prevState[index] = course;
         return [...prevState];
       });
     }
-    setListCourse(true);
   };
 
   const onCourseAdded = async (course) => {
@@ -114,22 +124,29 @@ export const CourseMainComponent = () => {
         alert(JSON.stringify(error));
         console.log(error);
       });
-
-    console.log(courses);
-    setListCourse(true);
-    setShowMessage(true);
   };
 
   return (
     <>
       <div>
-        <Link to="add">Add Course</Link>
+        <Link to="add">Add Course</Link> {"  "}
         <Link to="list">List Courses</Link>
       </div>
       <div>
         <Routes>
-          <Route path="add" element={<CourseForm />} />
-          <Route path="edit" element={<CourseForm course={course} />} />
+          <Route
+            path="add"
+            element={<CourseForm onCourseAdded={onCourseAdded} />}
+          />
+          <Route
+            path="edit"
+            element={
+              <CourseForm
+                course={course}
+                onCourseUpdated={courseUpdateHandler}
+              />
+            }
+          />
           <Route
             path="list"
             element={<CourseList courses={courses} onEdit={onEditHandler} />}
@@ -141,4 +158,4 @@ export const CourseMainComponent = () => {
       </div>
     </>
   );
-};
+}

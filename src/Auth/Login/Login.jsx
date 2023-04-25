@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -38,6 +39,7 @@ export const LoginForm = () => {
           if (res.status === 201) {
             res.json().then(async (data) => {
               localStorage.setItem("access_token", data.access_token);
+              console.log(jwtDecode(data.access_token));
               alert(" welcome back " + formik.values.email);
               const user = await fetch(
                 `http://localhost:2000/user/current-user/${formik.values.email}`,
@@ -50,9 +52,7 @@ export const LoginForm = () => {
               console.log(userJson);
               //todo: reditect to home
               //send user name to the home component as params
-              navigate("/home", {
-                state: { user: userJson },
-              });
+              navigate("/home/" + userJson.firstName);
 
               localStorage.setItem("user", JSON.stringify(userJson));
             });

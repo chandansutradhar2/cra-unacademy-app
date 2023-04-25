@@ -1,4 +1,4 @@
-import React from "react"; //libarary that defines whata  component is and how it works
+import React, { Suspense } from "react"; //libarary that defines whata  component is and how it works
 import ReactDOM from "react-dom/client"; //libarary that knows how to take a component and make it show up on the screen
 import "./index.css";
 import App from "./App";
@@ -10,12 +10,14 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import { CourseMainComponent } from "./Courses/CourseMain/CourseMain";
+
 import { LoginForm } from "./Auth/Login/Login";
 import { Home } from "./Home/Home";
 import { Signup } from "./Auth/Signup/Signup";
-import { CourseForm } from "./Courses/CourseForm/CourseForm";
-import CourseList from "./Courses/CourseList/CourseList";
+
+const CourseMainLazy = React.lazy(() =>
+  import("./Courses/CourseMain/CourseMain")
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -24,9 +26,17 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/course/*" element={<CourseMainComponent />} />
+          <Route
+            path="/course/*"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <CourseMainLazy />
+              </Suspense>
+            }
+          />
 
           <Route path="/home" index element={<Home />} />
+          <Route path="/home/:firstName" index element={<Home />} />
         </Route>
         <Route path="/login" element={<LoginForm />} />
 
