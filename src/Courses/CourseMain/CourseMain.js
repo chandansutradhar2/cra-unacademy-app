@@ -31,6 +31,7 @@ export default function CourseMain() {
     languages: [],
     learningObjectives: [],
     prerequisites: [],
+    
     reviews: [
       {
         review: "",

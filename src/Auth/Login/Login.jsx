@@ -19,11 +19,14 @@ const LoginSchema = Yup.object().shape({
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
+      setLoading(true);
+
       fetch("http://localhost:2000/auth/login", {
         body: JSON.stringify(values),
         method: "POST",
@@ -53,7 +56,6 @@ export const LoginForm = () => {
               //todo: reditect to home
               //send user name to the home component as params
               navigate("/home/" + userJson.firstName);
-
               localStorage.setItem("user", JSON.stringify(userJson));
             });
           } else if (res.status === 401) {
@@ -61,6 +63,9 @@ export const LoginForm = () => {
           } else {
             alert("failed to login due to some technical error");
           }
+        })
+        .finally(() => {
+          setLoading(false);
         });
     },
   });
@@ -123,10 +128,27 @@ export const LoginForm = () => {
               <span className="p-inputgroup-addon">
                 <i className="pi pi-arrow-right"></i>
               </span>
-              <Button label="Login" type="submit" className={styles.button} />
+              <Button
+                label="Login"
+                type="submit"
+                loading={loading}
+                className={styles.button}
+              />
             </div>
 
-            <Link to="../user/signup">New Here? Create an Account</Link>
+            <Link
+              style={{
+                paddingTop: "10px",
+                textDecoration: "none",
+                width: "100vw",
+                textAlign: "center",
+                alignContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+              }}
+              to="../selector">
+              New Here? Create an Account
+            </Link>
           </form>
         </div>
       </div>

@@ -1,0 +1,9 @@
+.rating {
+  display: flex;
+}
+
+.rate {
+    padding-top: 10px;
+  margin: 0.5em;
+  color: red;
+}

@@ -26,9 +26,11 @@ function updateCourse(course) {}
 
 function deleteCourse(id) {}
 
-function disableCourse() {}
+function disableCourse(id) {}
 
-function getCourseById(id) {}
+function getCourseById( id ) {
+  
+}
 
 function getAllCourse() {
   return new Promise((resolve, reject) => {

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { createAccount } from "../AuthService";
+import { Link } from "react-router-dom";
 
 import "./signup.css";
+import { Toast } from "primereact/toast";
 
 //match dto of nestjs
 const SignupSchema = Yup.object().shape({
@@ -25,6 +28,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const Signup = ({ userType }) => {
+  const toast = useRef(null);
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -39,6 +43,7 @@ export const Signup = ({ userType }) => {
     validateOnBlur: true,
     onSubmit: (values) => {
       //code to make a api call using fetch
+      formik.setFieldValue("roles", [userType]);
 
       fetch("http://localhost:2000/auth/signup", {
         body: JSON.stringify(values),
@@ -51,15 +56,24 @@ export const Signup = ({ userType }) => {
           console.log(err);
           alert("failed to create user.due to some error");
         })
-        .then((res) => {
-          if (res.status === 201) {
-            console.log(res);
-            alert( "User Created Successfully" );
-            //todo : redirect to home page
-            
+        .then(async (res) => {
+          console.log(res);
+          const response = await res.json();
+
+          if (response.status) {
+            toast.current.show({
+              Button: "OK",
+              severity: "success",
+              summary: "Success",
+              detail: "User created successfully!",
+            });
           } else {
-            console.log(res);
-            alert(res.statusText);
+            toast.current.show({
+              Button: "OK",
+              severity: "error",
+              summary: "Error",
+              detail: response.msg,
+            });
           }
         });
     },
@@ -79,6 +93,7 @@ export const Signup = ({ userType }) => {
   return (
     <div className="signup">
       <div className="signup__container">
+        <Toast ref={toast}></Toast>
         <div className="signup__container__header">
           <h1>Sign Up</h1>
         </div>
@@ -194,11 +209,18 @@ export const Signup = ({ userType }) => {
           </div>
           <small className="error">{formik.errors.mobileNo}</small>
           <Button
+            type="submit"
             label="CREATE ACCOUNT"
             style={{ width: "100%" }}
             className="p-button-raised full-width "
           />
         </form>
+
+        <Link
+          style={{ paddingTop: "10px", textDecoration: "none" }}
+          to="../login">
+          Already have an Account? Login here
+        </Link>
       </div>
     </div>
   );

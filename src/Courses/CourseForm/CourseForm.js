@@ -1,36 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { addCourse } from "../CourseService";
 import styles from "./courseform.module.css";
 import { useHistory, useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
+
 const styling = {
   marginBottom: "1rem",
   fontSize: "20px",
 };
 
 export function CourseForm(props) {
-  console.log("courseform component loaded");
+  const toast = useRef(null);
 
   const navigate = useNavigate();
 
-  const [course, setCourse] = useState(props.course);
+  const [course, setCourse] = useState({
+    name: "",
+    instructor: "",
+    description: "",
+  });
 
-  useEffect(() => {
-    if (course === null || course === undefined) {
-      setCourse({
-        name: "",
-        instructor: "",
-        description: "",
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (course === null || course === undefined) {
+  //     setCourse({
+  //       name: "",
+  //       instructor: "",
+  //       description: "",
+  //     });
+  //   }
+  // }, []);
 
   const clickHandler = () => {
     addCourse(course)
       .then(() => {
-        alert("course added successfully");
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Course Added Successfully",
+          life: 3000,
+        });
+
         navigate("../list", {
           replace: true,
         });
@@ -40,6 +52,7 @@ export function CourseForm(props) {
 
   return (
     <div className={styles.main}>
+      <Toast ref={toast} position="top-right" />
       <div className={styles.container}>
         <h1>Course Form</h1>
         <div
@@ -48,7 +61,7 @@ export function CourseForm(props) {
             marginBottom: "1rem",
           }}>
           <span className="p-inputgroup-addon">
-            <i className="pi pi-user"></i>
+            <i className="pi pi-bookmark"></i>
           </span>
           <InputText
             placeholder="Course Name"

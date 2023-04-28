@@ -2,24 +2,38 @@ import { useState } from "react";
 import { Signup } from "./Signup/Signup";
 import { Selector } from "./Selector/Selector";
 import { LoginForm } from "./Login/Login";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 // export user USER_ROLE {
 //     STUDENT = "STUDENT",
 //     INSTRUCTOR = "INSTRUCTOR",
 //     ADMIN = 'ADMIN'
 // }
 
-export const AuthMain = () => {
+const AuthMain = () => {
+  const navigate = useNavigate();
   const [userType, setUserType] = useState();
 
-  return (
-    <Routes>
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/signup/:userType" element={<Signup />} />
+  const onSelected = (type) => {
+    alert(type);
+    setUserType(type);
+    navigate("/user/signup/");
+  };
 
-      {/* {userType === "STUDENT" ||
+  return (
+    <>
+      <Routes>
+        <Route path="/login" element={<LoginForm />} />
+        <Route
+          path="/selector"
+          element={<Selector onSelected={onSelected} />}
+        />
+        <Route
+          path="/signup"
+          element={<Signup userType={userType} />}
+        />
+
+        {/* {userType === "STUDENT" ||
       userType === "INSTRUCTOR" ||
       userType === "ADMIN" ? (
         <Signup userType={userType} />
@@ -28,6 +42,10 @@ export const AuthMain = () => {
           onSelected={(type) => setUserType(type)}
         />
       )} */}
-    </Routes>
+      </Routes>
+      <Outlet />
+    </>
   );
 };
+
+export default AuthMain;

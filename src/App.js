@@ -44,7 +44,7 @@ function App() {
             Logout
           </Link>
         ) : (
-          <Link className="link login" to="/login">
+          <Link className="link login" to="/user/login">
             Login
           </Link>
         )}

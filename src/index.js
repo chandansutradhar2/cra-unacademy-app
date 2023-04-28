@@ -11,13 +11,13 @@ import {
   Outlet,
 } from "react-router-dom";
 
-import { LoginForm } from "./Auth/Login/Login";
 import { Home } from "./Home/Home";
-import { Signup } from "./Auth/Signup/Signup";
 
 const CourseMainLazy = React.lazy(() =>
   import("./Courses/CourseMain/CourseMain")
 );
+
+const AuthMainLazy = React.lazy(() => import("./Auth/AuthMain"));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -38,11 +38,15 @@ root.render(
           <Route path="/home" index element={<Home />} />
           <Route path="/home/:firstName" index element={<Home />} />
         </Route>
-        <Route path="/login" element={<LoginForm />} />
 
-        <Route path="/user">
-          <Route path="signup" element={<Signup />} />
-        </Route>
+        <Route
+          path="/user/*"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <AuthMainLazy />
+            </Suspense>
+          }
+        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -8,7 +8,7 @@ export const Home = () => {
   return (
     <div className={styles.home}>
       <h6>Welcome , {firstName}</h6>
-      <h1 className={styles.h1}>Learn Anywhwere, Anytime</h1>
+      <h1 className={styles.h1}>Learn Anywhere, Anytime</h1>
       <div className={styles.btn}>
         <Link to="/course" className={styles.link}>
           Explore Courses
