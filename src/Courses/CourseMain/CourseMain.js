@@ -19,7 +19,6 @@ export default function CourseMain() {
   const params = useParams();
 
   const msg = useRef(null);
-  const [courses, setCourses] = useState([]);
   const [course, setCourse] = useState({
     id: "",
     name: "",
@@ -70,38 +69,6 @@ export default function CourseMain() {
     });
   };
 
-  const courseUpdateHandler = (course) => {
-    const index = courses.findIndex(
-      (item) => item.courseName === course.courseName
-    );
-    if (index !== -1) {
-      fetch("http://localhost:2000/course/update", {
-        method: "PUT",
-        body: JSON.stringify(course),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          res
-            .json()
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      setCourses((prevState) => {
-        prevState[index] = course;
-        return [...prevState];
-      });
-    }
-  };
 
   const onCourseAdded = async (course) => {
     const response = await fetch("http://localhost:2000/course/add", {
@@ -115,10 +82,10 @@ export default function CourseMain() {
         console.log(result);
         result.json().then((data) => {
           console.log(data);
-          setCourses((prevState) => {
-            //prevState=[{},{},{}]
-            return [course, ...prevState];
-          });
+          // setCourses((prevState) => {
+          //   //prevState=[{},{},{}]
+          //   return [course, ...prevState];
+          // });
         });
       })
       .catch((error) => {
@@ -144,13 +111,12 @@ export default function CourseMain() {
             element={
               <CourseForm
                 course={course}
-                onCourseUpdated={courseUpdateHandler}
               />
             }
           />
           <Route
             path="list"
-            element={<CourseList courses={courses} onEdit={onEditHandler} />}
+            element={<CourseList  onEdit={onEditHandler} />}
           />
         </Routes>
       </div>

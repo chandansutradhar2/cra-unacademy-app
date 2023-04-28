@@ -7,13 +7,15 @@ import { CourseCard } from "../CourseCard/CourseCard";
 export default function CourseList() {
   console.log("course list component loaded");
   const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    getAllCourse().then((res) => {
-      console.log(res);
-      setCourses([...res]);
-    });
+  
+  useEffect( () => {
+    
+  getAllCourse().then((res) => {
+    console.log(res);
+    setCourses([...res]);
+  });
   }, []);
+
   const onMenuClicked = (label, item) => {
     alert(label);
     switch (label) {

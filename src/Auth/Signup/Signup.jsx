@@ -43,39 +43,27 @@ export const Signup = ({ userType }) => {
     validateOnBlur: true,
     onSubmit: (values) => {
       //code to make a api call using fetch
-      formik.setFieldValue("roles", [userType]);
+      createAccount(values)
+        .then( () =>
+          
+          toast.current.show({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Account Created Successfully...please wait login you in",
+            life: 3000,
+          } )
 
-      fetch("http://localhost:2000/auth/signup", {
-        body: JSON.stringify(values),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .catch((err) => {
-          console.log(err);
-          alert("failed to create user.due to some error");
-        })
-        .then(async (res) => {
-          console.log(res);
-          const response = await res.json();
-
-          if (response.status) {
-            toast.current.show({
-              Button: "OK",
-              severity: "success",
-              summary: "Success",
-              detail: "User created successfully!",
-            });
-          } else {
-            toast.current.show({
-              Button: "OK",
-              severity: "error",
-              summary: "Error",
-              detail: response.msg,
-            });
-          }
-        });
+          //todo: signIn()
+          
+        )
+        .catch((err) =>
+          toast.current.show({
+            severity: "error",
+            summary: "Error Message",
+            detail: err.message,
+            life: 3000,
+          })
+        );
     },
     onReset: () => {
       formik.resetForm();
