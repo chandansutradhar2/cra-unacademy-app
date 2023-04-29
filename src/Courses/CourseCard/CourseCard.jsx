@@ -1,11 +1,16 @@
 import { Card } from "primereact/card";
 import { Link } from "react-router-dom";
-import styles from "./course.module.css";
+import styles from "./coursecard.module.css";
 import { RatingControl } from "../../util/Rating/RatingControl.jsx";
 import { Button } from "primereact/button";
 import { EnrollControl } from "../EnrollControl/EnrollControl";
+import ActionControl from "../ActionControl/ActionControl";
+import { useContext } from "react";
+import { UserContext } from "../../App";
 
 export const CourseCard = ({ course }) => {
+  const user = useContext(UserContext);
+  console.log(user);
   const generateRandomImage = () => {
     return (
       <img
@@ -19,42 +24,27 @@ export const CourseCard = ({ course }) => {
   };
 
   const getFooter = () => {
-    return <EnrollControl course={course} />;
+    return (
+      <div className={styles.footer}>
+        <EnrollControl course={course} />
+        {user.roles.includes("INSTRUCTOR") ? (
+          <ActionControl course={course} />
+        ) : null}
+      </div>
+    );
   };
   return (
     <Card
+      key={course.id}
       className={styles.card}
-      header={generateRandomImage()}
-      footer={getFooter()}>
+      footer={getFooter()}
+      header={generateRandomImage()}>
       <h3 className={styles.h3}>{course.name}</h3>
-      <div style={{ marginTop: 0, fontStyle: "light" }}>
+      <p
+        className={styles.truncate}
+        style={{ marginTop: 0, fontStyle: "light" }}>
         {course.description}
-      </div>
+      </p>
     </Card>
-    // <div className={styles.card} key={course.id}>
-    //   <div className={styles.cardImage}>
-    //     <img
-    //       src={generateRandomImage()}
-    //       alt="course"
-    //       width={200}
-    //       height={150}
-    //     />
-    //   </div>
-    //   <div className={styles.cardContent}>
-    //     <h3 className={styles.h3}>{course.name}</h3>
-    //     <div style={{ marginTop: 0, fontStyle: "light" }}>
-    //       {course.description}
-    //     </div>
-    //     <div className={styles.rating}>
-    //       <RatingControl />
-    //     </div>
-    //     <div className={styles.instructor}>{course.instructor}</div>
-    //     <div className={styles.btn}>
-    //       <Link to={`/course/${course.id}`} className={styles.link}>
-    //         View Course
-    //       </Link>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };

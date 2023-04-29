@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -6,6 +6,7 @@ import { addCourse } from "../CourseService";
 import styles from "./courseform.module.css";
 import { useHistory, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
+import { UserContext } from "../../App";
 
 const styling = {
   marginBottom: "1rem",
@@ -13,25 +14,17 @@ const styling = {
 };
 
 export function CourseForm(props) {
+  const user = useContext(UserContext);
+
   const toast = useRef(null);
 
   const navigate = useNavigate();
 
   const [course, setCourse] = useState({
     name: "",
-    instructor: "",
+    instructor: user?.email,
     description: "",
   });
-
-  // useEffect(() => {
-  //   if (course === null || course === undefined) {
-  //     setCourse({
-  //       name: "",
-  //       instructor: "",
-  //       description: "",
-  //     });
-  //   }
-  // }, []);
 
   const clickHandler = () => {
     addCourse(course)
@@ -89,8 +82,8 @@ export function CourseForm(props) {
         <div>
           <InputTextarea
             value={course?.description}
-            rows={5}
-            cols={30}
+            rows={8}
+            cols={60}
             onChange={(ev) =>
               setCourse({ ...course, description: ev.target.value })
             }

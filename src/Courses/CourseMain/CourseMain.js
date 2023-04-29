@@ -30,7 +30,7 @@ export default function CourseMain() {
     languages: [],
     learningObjectives: [],
     prerequisites: [],
-    
+
     reviews: [
       {
         review: "",
@@ -69,7 +69,6 @@ export default function CourseMain() {
     });
   };
 
-
   const onCourseAdded = async (course) => {
     const response = await fetch("http://localhost:2000/course/add", {
       method: "POST",
@@ -106,18 +105,8 @@ export default function CourseMain() {
             path="add"
             element={<CourseForm onCourseAdded={onCourseAdded} />}
           />
-          <Route
-            path="edit"
-            element={
-              <CourseForm
-                course={course}
-              />
-            }
-          />
-          <Route
-            path="list"
-            element={<CourseList  onEdit={onEditHandler} />}
-          />
+          <Route path="/edit/:id" element={<CourseForm course={course} />} />
+          <Route path="list" element={<CourseList onEdit={onEditHandler} />} />
         </Routes>
       </div>
       <div style={{ width: "100vw" }} id="course-main" name="course-main">

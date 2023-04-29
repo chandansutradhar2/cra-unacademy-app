@@ -1,8 +1,7 @@
 .home {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  
 }
 .h1 {
   font-size: 4rem;
@@ -18,4 +17,8 @@
   align-self: flex-start;
   color: #fff;
   box-shadow: rgba(123, 123, 213, 0.8) 0px 48px 100px 0px;
+}
+
+.header {
+  height: 95vh;
 }

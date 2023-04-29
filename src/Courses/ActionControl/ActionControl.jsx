@@ -7,7 +7,7 @@ import React, { useRef } from "react";
 
 export default function ActionControl(props) {
   const menu = useRef(null);
-  const toast = useRef(null);
+
   let navigate = useNavigate();
 
   let items = [
@@ -18,8 +18,8 @@ export default function ActionControl(props) {
           label: "Edit Course",
           icon: "pi pi-fw pi-pencil",
           command: (event) => {
-            //this.props.onMenuClicked(event.item);
-            props.onMenuClicked(event.item.label);
+            // props.onMenuClicked( event.item.label );
+            navigate("/course/edit/" + props.course.id);
           },
         },
         {
@@ -80,14 +80,7 @@ export default function ActionControl(props) {
           label: "Students",
           link: "/students",
           icon: PrimeIcons.USER_PLUS,
-          command: (event) => {
-            toast.current.show({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
+          command: (event) => {},
         },
       ],
     },
@@ -95,9 +88,6 @@ export default function ActionControl(props) {
 
   return (
     <>
-      <div>
-        <Toast ref={toast}></Toast>
-      </div>
       <div>
         <Menu model={items} popup ref={menu} id="popup_menu" />
       </div>
