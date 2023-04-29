@@ -44,7 +44,7 @@ export default function CourseMain() {
     forum: [],
     sections: [
       {
-        name: "",
+        title: "",
         description: "",
         duration: 0,
         quizes: [

@@ -10,7 +10,6 @@ import { UserContext } from "../../App";
 
 export const CourseCard = ({ course }) => {
   const user = useContext(UserContext);
-  console.log(user);
   const generateRandomImage = () => {
     return (
       <img
