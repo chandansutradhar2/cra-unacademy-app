@@ -26,21 +26,21 @@ export default function ActionControl(props) {
           label: "Sections",
           icon: "pi pi-fw pi-book",
           command: (event) => {
-            props.onMenuClicked(event.item.label);
+            navigate("/course/edit/" + props.course.id + "/section");
           },
         },
         {
           label: "Learning Objective",
           icon: PrimeIcons.BELL,
           command: (event) => {
-            this.props.onMenuClicked(event.item.label);
+            navigate("/course/edit/" + props.course.id + "/objective");
           },
         },
         {
           label: "Prerequistes",
           icon: PrimeIcons.CHECK_CIRCLE,
           command: (event) => {
-            this.props.onMenuClicked(event.item.label);
+            navigate("/course/edit/" + props.course.id + "/prereq");
           },
         },
         {

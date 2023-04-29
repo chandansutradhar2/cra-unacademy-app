@@ -12,6 +12,9 @@ import {
   useParams,
 } from "react-router-dom";
 import { Suspense } from "react";
+import { SectionForm } from "../Section/SectionForm";
+import { ObjectiveForm } from "../CourseForm/Objectives/ObjectiveForm";
+import { PrereqForm } from "../CourseForm/Prerequisites/PrereqForm";
 
 export default function CourseMain() {
   const navigate = useNavigate();
@@ -47,11 +50,9 @@ export default function CourseMain() {
         quizes: [
           {
             question: "",
-            options: [
-              
-            ],
+            options: [],
             answer: "",
-          }
+          },
         ],
         lessons: [
           {
@@ -77,35 +78,7 @@ export default function CourseMain() {
 
   const onEditHandler = (course) => {
     setCourse(course);
-    navigate("edit", {
-      state: {
-        course: course,
-      },
-    });
-  };
-
-  const onCourseAdded = async (course) => {
-    const response = await fetch("http://localhost:2000/course/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(course),
-    })
-      .then((result) => {
-        console.log(result);
-        result.json().then((data) => {
-          console.log(data);
-          // setCourses((prevState) => {
-          //   //prevState=[{},{},{}]
-          //   return [course, ...prevState];
-          // });
-        });
-      })
-      .catch((error) => {
-        alert(JSON.stringify(error));
-        console.log(error);
-      });
+    navigate("edit");
   };
 
   return (
@@ -116,11 +89,11 @@ export default function CourseMain() {
       </div>
       <div>
         <Routes>
-          <Route
-            path="add"
-            element={<CourseForm onCourseAdded={onCourseAdded} />}
-          />
+          <Route path="add" element={<CourseForm />} />
           <Route path="/edit/:id" element={<CourseForm course={course} />} />
+          <Route path="/edit/:id/section" element={<SectionForm />} />
+          <Route path="/edit/:id/objective" element={<ObjectiveForm />} />
+          <Route path="/edit/:id/prereq" element={<PrereqForm />} />
           <Route path="list" element={<CourseList onEdit={onEditHandler} />} />
         </Routes>
       </div>
