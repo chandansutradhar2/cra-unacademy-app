@@ -44,14 +44,31 @@ export default function CourseMain() {
         name: "",
         description: "",
         duration: 0,
-        videos: [
+        quizes: [
           {
+            question: "",
+            options: [
+              
+            ],
+            answer: "",
+          }
+        ],
+        lessons: [
+          {
+            transcript: "",
             name: "",
-            language: "",
             description: "",
             duration: 0,
-            url: "",
-            videoCC: "",
+            videos: [
+              {
+                name: "",
+                language: "",
+                description: "",
+                duration: 0,
+                url: "",
+                videoCC: "",
+              },
+            ],
           },
         ],
       },
