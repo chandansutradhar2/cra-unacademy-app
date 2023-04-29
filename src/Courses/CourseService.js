@@ -22,15 +22,29 @@ function addCourse(course) {
   });
 }
 
-function updateCourse(course) {}
+function updateCourse(course) {
+  return new Promise((resolve, reject) => {
+    course.createdBy = currentUser.email;
+    fetch(`${url}/course/update`, {
+      method: "PUT",
+      headers: headers,
+      body: JSON.stringify(course),
+    })
+      .then(async (res) => {
+        const r = await res.json();
+        r.status ? resolve(r) : reject(r.msg);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 
 function deleteCourse(id) {}
 
 function disableCourse(id) {}
 
-function getCourseById( id ) {
-  
-}
+function getCourseById(id) {}
 
 function getAllCourse() {
   return new Promise((resolve, reject) => {

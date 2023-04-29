@@ -14,9 +14,7 @@ import {
 import { Suspense } from "react";
 
 export default function CourseMain() {
-  console.log("coursemain component loaded");
   const navigate = useNavigate();
-  const params = useParams();
 
   const msg = useRef(null);
   const [course, setCourse] = useState({

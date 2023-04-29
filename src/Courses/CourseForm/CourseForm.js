@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { addCourse } from "../CourseService";
+import { addCourse, updateCourse } from "../CourseService";
 import styles from "./courseform.module.css";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useHistory, useNavigate, useParams } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import { UserContext } from "../../App";
 
@@ -13,34 +13,67 @@ const styling = {
   fontSize: "20px",
 };
 
-export function CourseForm(props) {
+export function CourseForm() {
   const user = useContext(UserContext);
-
   const toast = useRef(null);
-
   const navigate = useNavigate();
-
   const [course, setCourse] = useState({
     name: "",
     instructor: user?.email,
     description: "",
   });
+  const courseId = useParams().id;
 
+  useEffect(() => {
+    if (courseId) {
+      fetch(`http://localhost:2000/course/byId/${courseId}`)
+        .then((res) => res.json())
+        .then((r) => {
+          console.log(r);
+          setCourse({
+            instructor: r.instructor,
+            id: courseId,
+            reviews: [],
+            name: r.name,
+            description: r.description,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
   const clickHandler = () => {
-    addCourse(course)
-      .then(() => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Course Added Successfully",
-          life: 3000,
-        });
+    !courseId
+      ? addCourse(course)
+          .then(() => {
+            toast.current.show({
+              severity: "success",
+              summary: "Success",
+              detail: "Course Added Successfully",
+              life: 3000,
+            });
 
-        navigate("../list", {
-          replace: true,
-        });
-      })
-      .catch((err) => alert(err));
+            navigate("../list", {
+              replace: true,
+            });
+          })
+          .catch((err) => alert(err))
+      : updateCourse(course)
+          .then(() => {
+            toast.current.show({
+              severity: "success",
+              summary: "Success",
+              detail: "Course Updated Successfully",
+              life: 3000,
+            });
+          })
+          .catch((err) => {
+            toast.current.show({
+              severity: "error",
+              summary: "error",
+              detail: err,
+              life: 3000,
+            });
+          });
   };
 
   return (
@@ -91,7 +124,7 @@ export function CourseForm(props) {
         </div>
 
         <Button
-          label={props.course?.name ? "Update Course" : "Add Course"}
+          label={courseId ? "Update Course" : "Add Course"}
           style={styling}
           onClick={() => clickHandler()}
         />
