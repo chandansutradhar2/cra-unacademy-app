@@ -8,7 +8,6 @@ export default function CourseList() {
   useEffect( () => {
     
   getAllCourse().then((res) => {
-    console.log(res);
     setCourses([...res]);
   });
   }, []);

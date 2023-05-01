@@ -29,7 +29,6 @@ export function CourseForm() {
       fetch(`http://localhost:2000/course/byId/${courseId}`)
         .then((res) => res.json())
         .then((r) => {
-          console.log(r);
           setCourse({
             instructor: r.instructor,
             id: courseId,

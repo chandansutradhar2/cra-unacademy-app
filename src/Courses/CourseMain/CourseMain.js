@@ -12,9 +12,10 @@ import {
   useParams,
 } from "react-router-dom";
 import { Suspense } from "react";
-import { SectionForm } from "../Section/SectionForm";
+import { SectionForm } from "../Section/SecionForm/SectionForm";
 import { ObjectiveForm } from "../CourseForm/Objectives/ObjectiveForm";
 import { PrereqForm } from "../CourseForm/Prerequisites/PrereqForm";
+import { Section } from "../Section/Section";
 
 export default function CourseMain() {
   const navigate = useNavigate();
@@ -56,20 +57,17 @@ export default function CourseMain() {
         ],
         lessons: [
           {
-            transcript: "",
+            transcripts: [],
             name: "",
             description: "",
             duration: 0,
-            videos: [
-              {
-                name: "",
-                language: "",
-                description: "",
-                duration: 0,
-                url: "",
-                videoCC: "",
-              },
-            ],
+            video: {
+              language: "",
+              description: "",
+              duration: 0,
+              url: "",
+              videoCC: "",
+            },
           },
         ],
       },
@@ -91,7 +89,7 @@ export default function CourseMain() {
         <Routes>
           <Route path="add" element={<CourseForm />} />
           <Route path="/edit/:id" element={<CourseForm course={course} />} />
-          <Route path="/edit/:id/section" element={<SectionForm />} />
+          <Route path="/edit/:id/section" element={<Section />} />
           <Route path="/edit/:id/objective" element={<ObjectiveForm />} />
           <Route path="/edit/:id/prereq" element={<PrereqForm />} />
           <Route path="list" element={<CourseList onEdit={onEditHandler} />} />

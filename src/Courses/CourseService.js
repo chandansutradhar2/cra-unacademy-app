@@ -40,27 +40,6 @@ function updateCourse(course) {
   });
 }
 
-function getAllSectionByCourseId(courseId) {
-  return new Promise((resolve, reject) => {
-    fetch(`${url}/section/${courseId}`, {
-      method: "GET",
-    })
-      .then((res) => {
-        res.json().then((data) => {
-          console.log(data);
-          if (data.status) {
-            resolve(data.body);
-          } else {
-            reject(data.msg);
-          }
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        reject(err);
-      });
-  });
-}
 
 function deleteCourse(id) {}
 
@@ -75,16 +54,13 @@ function getAllCourse() {
         res
           .json()
           .then((data) => {
-            console.log(data);
             resolve(data);
           })
           .catch((err) => {
-            console.log(err);
             reject(err);
           });
       })
       .catch((err) => {
-        console.log(err);
         reject(err);
       });
   });
@@ -97,5 +73,4 @@ module.exports = {
   disableCourse,
   getCourseById,
   getAllCourse,
-  getAllSectionByCourseId,
 };
